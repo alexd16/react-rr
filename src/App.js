@@ -11,30 +11,12 @@ class Square extends Component {
 }
 
 class Board extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      isXNext: true,
-    };
-  }
-
-  handleSquareClick(position) {
-    const { squares, isXNext } = this.state;
-    const nextSquares = [...squares];
-    nextSquares[position] = isXNext ? "X" : "O";
-    this.setState({
-      squares: nextSquares,
-      isXNext: !isXNext,
-    });
-  }
-
   renderSquare(position) {
     return (
       <Square
         position={position}
-        value={this.state.squares[position]}
-        onClick={() => this.handleSquareClick(position)}
+        value={this.props.squares[position]}
+        onClick={() => this.props.onSquareClick(position)}
       />
     );
   }
@@ -63,13 +45,42 @@ class Board extends Component {
 }
 
 class TicTacToe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+      isXNext: true,
+    };
+  }
+
+  handleSquareClick(position) {
+    const { squares, isXNext } = this.state;
+    const nextSquares = [...squares];
+    nextSquares[position] = isXNext ? "X" : "O";
+    this.setState({
+      squares: nextSquares,
+      isXNext: !isXNext,
+    });
+  }
+
+  renderStatusText() {
+    if (this.state.isXNext) {
+      return "Next Player: X";
+    } else {
+      return "Next Player: O";
+    }
+  }
+
   render() {
     return (
       <div>
         <div>
-          <Board />
+          <Board
+            squares={this.state.squares}
+            onSquareClick={position => this.handleSquareClick(position)}
+          />
         </div>
-        <div>Next Player: X</div>
+        <div>{this.renderStatusText()}</div>
       </div>
     );
   }
