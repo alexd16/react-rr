@@ -55,6 +55,9 @@ class TicTacToe extends Component {
 
   handleSquareClick(position) {
     const { squares, isXNext } = this.state;
+    if (squares[position] || calculateWinner(squares)) {
+      return;
+    }
     const nextSquares = [...squares];
     nextSquares[position] = isXNext ? "X" : "O";
     this.setState({
@@ -64,7 +67,11 @@ class TicTacToe extends Component {
   }
 
   renderStatusText() {
-    if (this.state.isXNext) {
+    const { squares, isXNext } = this.state;
+    const winner = calculateWinner(squares);
+    if (winner) {
+      return `Winner is: ${winner}`;
+    } else if (isXNext) {
       return "Next Player: X";
     } else {
       return "Next Player: O";
@@ -87,3 +94,23 @@ class TicTacToe extends Component {
 }
 
 export default TicTacToe;
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
