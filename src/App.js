@@ -15,15 +15,17 @@ class Board extends Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
+      isXNext: true,
     };
   }
 
   handleSquareClick(position) {
-    const { squares } = this.state;
+    const { squares, isXNext } = this.state;
     const nextSquares = [...squares];
-    nextSquares[position] = "X";
+    nextSquares[position] = isXNext ? "X" : "O";
     this.setState({
       squares: nextSquares,
+      isXNext: !isXNext,
     });
   }
 
