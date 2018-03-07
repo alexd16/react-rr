@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Square extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
+
+  render() {
     return (
-      <button className="square">
-        {this.props.value}
+      <button className="square" onClick={() => this.setState({ value: "X" })}>
+        {this.state.value}
       </button>
-    )
+    );
   }
 }
 
@@ -15,22 +22,22 @@ class Board extends Component {
     return (
       <div>
         <div className="board-row">
-          <Square value={1}></Square>
-          <Square value={2}></Square>
-          <Square value={3}></Square>
+          <Square position={1} />
+          <Square position={2} />
+          <Square position={3} />
         </div>
         <div className="board-row">
-          <Square value={4}></Square>
-          <Square value={5}></Square>
-          <Square value={6}></Square>
+          <Square position={4} />
+          <Square position={5} />
+          <Square position={6} />
         </div>
         <div className="board-row">
-          <Square value={7}></Square>
-          <Square value={8}></Square>
-          <Square value={9}></Square>
+          <Square position={7} />
+          <Square position={8} />
+          <Square position={9} />
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -39,11 +46,9 @@ class TicTacToe extends Component {
     return (
       <div>
         <div>
-          <Board/>
+          <Board />
         </div>
-        <div>
-          Next Player: X
-        </div>
+        <div>Next Player: X</div>
       </div>
     );
   }
