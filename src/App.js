@@ -78,6 +78,14 @@ class TicTacToe extends Component {
     }
   }
 
+  reset() {
+    const state = {
+      squares: Array(9).fill(null),
+      isXNext: true,
+    };
+    this.setState(state);
+  }
+
   render() {
     return (
       <div>
@@ -88,6 +96,9 @@ class TicTacToe extends Component {
           />
         </div>
         <div>{this.renderStatusText()}</div>
+        <div>
+          <button onClick={() => this.reset()}>Reset</button>
+        </div>
       </div>
     );
   }
